@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}Admin page{% endblock %}
+
+{% block body %}
+    <a href="/">On main page</a>
+    <ul id="Users">
+        {% for user in users %}
+            <li>{{ user }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
