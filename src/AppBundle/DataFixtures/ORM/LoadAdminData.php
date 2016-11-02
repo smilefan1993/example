@@ -10,7 +10,8 @@ use AppBundle\Entity\User;
 /*
  * Loading of Admin role user into DB
  */
-class LoadAdminData implements FixtureInterface, ContainerAwareInterface{
+class LoadAdminData implements FixtureInterface, ContainerAwareInterface
+{
 
     /**
      * @var ContainerInterface
