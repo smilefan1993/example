@@ -33,11 +33,11 @@ class LoadAdminData implements FixtureInterface, ContainerAwareInterface{
     {
         $userManager = $this->container->get('fos_user.user_manager');
         $userAdmin = $userManager->createUser();
-        $userAdmin -> setUsername('admin1');
-        $userAdmin -> setPlainPassword('rtynzhf');
-        $userAdmin -> setEmail('testmail@mail.com');
-        $userAdmin -> setEnabled(true);
-        $userAdmin -> setRoles(array('ROLE_ADMIN'));
+        $userAdmin->setUsername('admin1');
+        $userAdmin->setPlainPassword('rtynzhf');
+        $userAdmin->setEmail('testmail@mail.com');
+        $userAdmin->setEnabled(true);
+        $userAdmin->setRoles(array('ROLE_ADMIN'));
         $userManager->updateUser($userAdmin,true);
     }
 }
