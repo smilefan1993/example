@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}Main Page{% endblock %}
 {%block body %}
-{{ message }}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ include('mainpage/loggeduser.html.twig') }}
+        {% else %}
+        {{ include('mainpage/notloggeduser.html.twig') }}
+    {% endif %}
     <ul>
         <li><a href="/login">Login Page</a></li>
         <li><a href="/register">Register Page</a></li>
     </ul>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a href="/logout">Logout</a>
-        {% endif %}
+
 {% endblock %}

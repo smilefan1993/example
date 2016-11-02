@@ -10,23 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    private $authmessage = "AdvanceHelloWorld!";
-    private $notauthmessage = "HelloWorld!";
-    /**
+
+    /** Rendering main paige of application
      * @Route("/", name="homepage")
+     *
+     * @return response
      */
     public function indexAction(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->render('mainpage/mainpage.html.twig',[
-                'message' => $this->notauthmessage,
-            ]);
-        }else{
-            return $this->render('mainpage/mainpage.html.twig',[
-                'message' => $this->authmessage,
-            ]);
-        }
-
+        return $this->render('mainpage/mainpage.html.twig');
     }
 
 

@@ -7,13 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
 
 /**
- * User
+ * User entity
  *
  * @ORM\Table("User")
  * @ORM\Entity
  */
+class User extends BaseUser
+{
 
-class User extends BaseUser {
     /**
      *
      * @var integer
@@ -24,10 +25,8 @@ class User extends BaseUser {
      */
     protected $id;
 
-
-
     /**
-     * Get id
+     * Return user Id
      *
      * @return integer
      */

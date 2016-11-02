@@ -7,18 +7,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminController extends Controller {
-    private $check='its a check text';
+class AdminController extends Controller
+{
 
-
-    /**
+    /** Render page of admin user, and finding data to show
      * @Route ("/admin/", name="adminpage")
+     *
+     * @return response rendering admin page of application
      */
-    public function adminController(){
+    public function adminController()
+    {
         $quee = $this->getDoctrine()->getRepository('AppBundle:User');
-        $users = $quee->findAll();
+        $ListOfUsers = $quee->findAll();
         return $this->render('adminpage/admin.html.twig',[
-            'users'=> $users,
+            'users'=> $ListOfUsers,
         ]);
     }
 }
