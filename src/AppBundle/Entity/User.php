@@ -26,6 +26,20 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="myFriends")
+     */
+    private $friendsWithMe;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="friendsWithMe")
+     * @ORM\JoinTable(name="friends",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="friend_user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $myFriends;
+
+    /**
      * Return user Id
      *
      * @return integer
@@ -33,5 +47,12 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myFriends = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }
