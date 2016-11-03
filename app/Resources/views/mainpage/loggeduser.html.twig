@@ -1,2 +1,8 @@
-<h1>AdvancedHelloWorld!</h1>
+<h1>UserCount:</h1>
+<ul id="Users">
+    {% for user in users %}
+        <li>{% include 'mainpage/userform.html.twig' %}</li>
+    {% endfor %}
+</ul>
+
 <a href="/logout">Logout</a>

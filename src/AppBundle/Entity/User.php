@@ -32,9 +32,9 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="friendsWithMe")
-     * @ORM\JoinTable(name="friends",
+     * @ORM\JoinTable(name="ConnectedUser",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="friend_user_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="connected_user_id", referencedColumnName="id")}
      *      )
      */
     private $myFriends;
