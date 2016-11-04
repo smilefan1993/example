@@ -1,3 +1,15 @@
-<h1>UserCount:</h1>
-
+<h1>UserCount:</h1> {{ template }}
+    <table style="border:5px">
+        <tr>
+            <th>UserName</th>
+            <th>Connect/Disconnect</th>
+        </tr>
+        <tr>
+            <td>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+            </td>
+        </tr>
+    </table>
 <a href="/logout">Logout</a>

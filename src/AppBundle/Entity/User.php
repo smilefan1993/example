@@ -40,6 +40,21 @@ class User extends BaseUser
     private $myFriends;
 
     /**
+     * @param User $connectUser
+     * @return $this
+     */
+    public function addConnect(User $connectUser)
+    {
+        $connectUser->addFriend($this);
+        $this->myFriends[] = $connectUser;
+        return $this;
+    }
+
+    public function addFriend(User $connectUser)
+    {
+        $this->friendsWithMe[]=$connectUser;
+    }
+    /**
      * Return user Id
      *
      * @return integer
