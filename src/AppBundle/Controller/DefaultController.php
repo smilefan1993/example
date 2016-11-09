@@ -18,20 +18,20 @@ class DefaultController extends Controller
      */
     public function buttonAction($id)
     {
-        $UserValidation = $this->get('security.authorization_checker');
+        $userValidation = $this->get('security.authorization_checker');
 
-        if($UserValidation->isGranted('IS_AUTHENTICATED_REMEMBERED'))
-        {
-            $CurrentUser = $this->getUser()->getId();
-            $UserServices = $this->get('user.helper');
-            $ConnectionResult = $UserServices->connectedUsers($CurrentUser);
+        if($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+            $currentUser = $this->getUser()->getId();
+            $userServices = $this->get('user.helper');
+            $connectionResult = $userServices->connectedUsers($currentUser);
 
-            if (in_array($id, $ConnectionResult))
-                $UserServices->deleteUserConnection($CurrentUser,$id);
+            if (in_array($id, $connectionResult))
+                $userServices->deleteUserConnection($currentUser,$id);
             else
-                $UserServices->createConnection($CurrentUser,$id);
+                $userServices->createConnection($currentUser,$id);
 
         }
+
         return $this->redirectToRoute('homepage');
     }
 
@@ -42,25 +42,24 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $UserValidation = $this->get('security.authorization_checker');
-        $UserCount = '0';
+        $userValidation = $this->get('security.authorization_checker');
+        $userCount = 0;
 
-        if ($UserValidation->isGranted('IS_AUTHENTICATED_REMEMBERED'))
-        {
-            $CurrentUser = $this->getUser()->getId();
-            $UserServices = $this->get('user.helper');
-            $ListOfUsers = $UserServices->findUsers();
-            $ConnectionResult = $UserServices->connectedUsers($CurrentUser);
-            $UserCount=count($ConnectionResult);
+        if ($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+            $currentUser = $this->getUser()->getId();
+            $userServices = $this->get('user.helper');
+            $listOfUsers = $userServices->findUsers();
+            $connectionResult = $userServices->connectedUsers($currentUser);
+            $userCount=count($connectionResult);
             return $this->render('mainpage/mainpage.html.twig',array(
-                'users'=>$ListOfUsers,
-                'ConCount'=> $UserCount,
-                'ConResult'=>$ConnectionResult,
+                'users'=>$listOfUsers,
+                'ConCount'=> $userCount,
+                'ConResult'=>$connectionResult,
             ));
-
         }
+
         return $this->render('mainpage/mainpage.html.twig',array(
-            'ConCount'=> $UserCount,
+            'ConCount'=> $userCount,
         ));
     }
 

@@ -56,8 +56,7 @@ class User extends BaseUser
      */
     public function removeConnect(User $user)
     {
-        if($this->myFriends->contains($user))
-        {
+        if($this->myFriends->contains($user)){
             $this->friendsWithMe->removeElement($this);
             $this->myFriends->removeElement($user);
             return $this;

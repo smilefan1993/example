@@ -62,28 +62,26 @@ class UserHelper
      */
     public function connectedUsers($connectedUser)
     {
-        $FriendsOfUser = $this->entityManager->createQuery('
+        $friendsOfUser = $this->entityManager->createQuery('
             SELECT u.id FROM AppBundle:User u
                       JOIN u.friendsWithMe a WHERE a.id=:myid
                 ')->setParameter('myid',$connectedUser);
-        $ListOfUserFriends = $FriendsOfUser->getResult();
+        $listOfUserFriends = $friendsOfUser->getResult();
         $userFriend = $this->entityManager->createQuery('
             SELECT u.id FROM AppBundle:User u
                       JOIN u.myFriends mf WHERE mf.id=:myid
                 ')->setParameter('myid',$connectedUser);
-        $ListOfFriends = $userFriend->getResult();
-        $ListOfUsers=array();
+        $listOfFriends = $userFriend->getResult();
+        $listOfUsers=array();
 
-        foreach($ListOfUserFriends as $user)
-        {
-            $ListOfUsers[] = $user['id'];
+        foreach($listOfUserFriends as $user){
+            $listOfUsers[] = $user['id'];
         }
 
-        foreach($ListOfFriends as $friend)
-        {
-            $ListOfUsers[] = $friend['id'];
+        foreach($listOfFriends as $friend){
+            $listOfUsers[] = $friend['id'];
         }
 
-        return $ListOfUsers;
+        return $listOfUsers;
     }
 }
