@@ -10,4 +10,13 @@
 {{ 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
 {% endautoescape %}
 {% endblock %}
-{% block body_html %}{% endblock %}
+{% block body_html %}
+<div dir="ltr" style="display: block; width: 100%; background: #ffffff">
+    Hello {{ user.username }}
+    <br>
+    To finish activating your account - please visit <a href="{{ confirmationUrl }}">confirmation link </a>
+    <br>
+    Regards,<br>
+    the Team.
+</div>
+{% endblock %}
