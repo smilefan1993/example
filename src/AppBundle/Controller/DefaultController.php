@@ -51,8 +51,16 @@ class DefaultController extends Controller
             $listOfUsers = $userServices->findUsers();
             $connectionResult = $userServices->getConnectedUsers($currentUser);
             $userCount = count($connectionResult);
+            $paginator = $this->get('knp_paginator');
+
+            if($request->query->get('page'))
+                $paginatorPage = $request->query->get('page');
+            else
+                $paginatorPage = 1;
+
+            $paginator = $paginator->paginate($listOfUsers,$paginatorPage,6);
             return $this->render('mainpage/mainpage.html.twig',array(
-                'users'=>$listOfUsers,
+                'pagination'=>$paginator,
                 'ConCount'=>$userCount,
                 'ConResult'=>$connectionResult,
             ));
