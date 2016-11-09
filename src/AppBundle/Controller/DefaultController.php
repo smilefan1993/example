@@ -50,7 +50,7 @@ class DefaultController extends Controller
             $userServices = $this->get('user.helper');
             $listOfUsers = $userServices->findUsers();
             $connectionResult = $userServices->connectedUsers($currentUser);
-            $userCount=count($connectionResult);
+            $userCount = count($connectionResult);
             return $this->render('mainpage/mainpage.html.twig',array(
                 'users'=>$listOfUsers,
                 'ConCount'=> $userCount,
@@ -59,7 +59,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('mainpage/mainpage.html.twig',array(
-            'ConCount'=> $userCount,
+            'ConCount'=>$userCount,
         ));
     }
 

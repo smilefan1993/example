@@ -72,7 +72,7 @@ class UserHelper
                       JOIN u.myFriends mf WHERE mf.id=:myid
                 ')->setParameter('myid',$connectedUser);
         $listOfFriends = $userFriend->getResult();
-        $listOfUsers=array();
+        $listOfUsers = array();
 
         foreach($listOfUserFriends as $user){
             $listOfUsers[] = $user['id'];

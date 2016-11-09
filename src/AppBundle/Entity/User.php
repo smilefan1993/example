@@ -68,7 +68,7 @@ class User extends BaseUser
      */
     public function addFriend(User $connectUser)
     {
-        $this->friendsWithMe[]=$connectUser;
+        $this->friendsWithMe[] = $connectUser;
     }
 
     /**
