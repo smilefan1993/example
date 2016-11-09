@@ -36,8 +36,8 @@ class UserHelper
      */
     public function createConnection($user1,$user2)
     {
-        $user1 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user1);
-        $user2 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user2);
+        $user1 = $this->repository->findOneBy(array('id'=>$user1));
+        $user2 = $this->repository->findOneBy(array('id'=>$user2));
         $user1->addConnect($user2);
         $this->entityManager->flush();
     }
@@ -48,12 +48,21 @@ class UserHelper
      */
     public function deleteUserConnection($user1,$user2)
     {
-        $user1 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user1);
-        $user2 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user2);
+        $user1 = $this->repository->findOneBy(array('id'=>$user1));
+        $user2 = $this->repository->findOneBy(array('id'=>$user2));
         $user1->removeConnect($user2);
         $user2->removeConnect($user1);
         $this->entityManager->flush();
 
+    }
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function getConnectedUsers($user)
+    {
+        return $this->connectedUsers($user);
     }
 
     /** Find all connect of user

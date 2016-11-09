@@ -16,19 +16,19 @@ class DefaultController extends Controller
     /** Action for buttons, adding or delete Connection from DataBase
      * @Route("/pressing/{id}", name="buttonActions" )
      */
-    public function buttonAction($id)
+    public function buttonAction(User $user)
     {
         $userValidation = $this->get('security.authorization_checker');
 
         if($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
             $currentUser = $this->getUser()->getId();
             $userServices = $this->get('user.helper');
-            $connectionResult = $userServices->connectedUsers($currentUser);
+            $connectionResult = $userServices->getConnectedUsers($currentUser);
 
-            if (in_array($id, $connectionResult))
-                $userServices->deleteUserConnection($currentUser,$id);
+            if (in_array($user->getId(), $connectionResult))
+                $userServices->deleteUserConnection($currentUser,$user->getId());
             else
-                $userServices->createConnection($currentUser,$id);
+                $userServices->createConnection($currentUser,$user->getId());
 
         }
 
@@ -49,7 +49,7 @@ class DefaultController extends Controller
             $currentUser = $this->getUser()->getId();
             $userServices = $this->get('user.helper');
             $listOfUsers = $userServices->findUsers();
-            $connectionResult = $userServices->connectedUsers($currentUser);
+            $connectionResult = $userServices->getConnectedUsers($currentUser);
             $userCount = count($connectionResult);
             return $this->render('mainpage/mainpage.html.twig',array(
                 'users'=>$listOfUsers,
