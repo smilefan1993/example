@@ -3,6 +3,7 @@
 namespace AppBundle\UserHelper;
 
 use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 
@@ -53,44 +54,21 @@ class UserHelper
         $user1->removeConnect($user2);
         $user2->removeConnect($user1);
         $this->entityManager->flush();
-
     }
 
-    /**
+    /** Find all connect of user
      * @param $user
      * @return array
      */
     public function getConnectedUsers($user)
     {
-        return $this->connectedUsers($user);
-    }
+        $user = $this->repository->findOneBy(array('id'=>$user));
+        $result = $user->getConnects();
+        $listOfResult = array();
 
-    /** Find all connect of user
-     * @param $connectedUser
-     * @return array
-     */
-    public function connectedUsers($connectedUser)
-    {
-        $friendsOfUser = $this->entityManager->createQuery('
-            SELECT u.id FROM AppBundle:User u
-                      JOIN u.friendsWithMe a WHERE a.id=:myid
-                ')->setParameter('myid',$connectedUser);
-        $listOfUserFriends = $friendsOfUser->getResult();
-        $userFriend = $this->entityManager->createQuery('
-            SELECT u.id FROM AppBundle:User u
-                      JOIN u.myFriends mf WHERE mf.id=:myid
-                ')->setParameter('myid',$connectedUser);
-        $listOfFriends = $userFriend->getResult();
-        $listOfUsers = array();
+        foreach($result as $res)
+            $listOfResult[] = $res->getId();
 
-        foreach($listOfUserFriends as $user){
-            $listOfUsers[] = $user['id'];
-        }
-
-        foreach($listOfFriends as $friend){
-            $listOfUsers[] = $friend['id'];
-        }
-
-        return $listOfUsers;
+        return $listOfResult;
     }
 }

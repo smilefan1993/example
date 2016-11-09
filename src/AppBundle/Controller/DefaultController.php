@@ -53,7 +53,7 @@ class DefaultController extends Controller
             $userCount = count($connectionResult);
             return $this->render('mainpage/mainpage.html.twig',array(
                 'users'=>$listOfUsers,
-                'ConCount'=> $userCount,
+                'ConCount'=>$userCount,
                 'ConResult'=>$connectionResult,
             ));
         }

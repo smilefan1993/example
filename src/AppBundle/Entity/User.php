@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -61,6 +62,14 @@ class User extends BaseUser
             $this->myFriends->removeElement($user);
             return $this;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getConnects()
+    {
+        return array_merge($this->friendsWithMe->toArray(),$this->myFriends->toArray());
     }
 
     /**
