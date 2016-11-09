@@ -21,14 +21,14 @@ class DefaultController extends Controller
         $userValidation = $this->get('security.authorization_checker');
 
         if($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
-            $currentUser = $this->getUser()->getId();
+            $currentUser = $this->getUser();
             $userServices = $this->get('user.helper');
             $connectionResult = $userServices->getConnectedUsers($currentUser);
 
             if (in_array($user->getId(), $connectionResult))
-                $userServices->deleteUserConnection($currentUser,$user->getId());
+                $userServices->deleteUserConnection($currentUser,$user);
             else
-                $userServices->createConnection($currentUser,$user->getId());
+                $userServices->createConnection($currentUser,$user);
 
         }
 
@@ -46,7 +46,7 @@ class DefaultController extends Controller
         $userCount = 0;
 
         if ($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
-            $currentUser = $this->getUser()->getId();
+            $currentUser = $this->getUser();
             $userServices = $this->get('user.helper');
             $listOfUsers = $userServices->findUsers();
             $connectionResult = $userServices->getConnectedUsers($currentUser);

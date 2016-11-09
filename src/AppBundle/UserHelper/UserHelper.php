@@ -37,8 +37,6 @@ class UserHelper
      */
     public function createConnection($user1,$user2)
     {
-        $user1 = $this->repository->findOneBy(array('id'=>$user1));
-        $user2 = $this->repository->findOneBy(array('id'=>$user2));
         $user1->addConnect($user2);
         $this->entityManager->flush();
     }
@@ -49,8 +47,6 @@ class UserHelper
      */
     public function deleteUserConnection($user1,$user2)
     {
-        $user1 = $this->repository->findOneBy(array('id'=>$user1));
-        $user2 = $this->repository->findOneBy(array('id'=>$user2));
         $user1->removeConnect($user2);
         $user2->removeConnect($user1);
         $this->entityManager->flush();
@@ -62,7 +58,6 @@ class UserHelper
      */
     public function getConnectedUsers($user)
     {
-        $user = $this->repository->findOneBy(array('id'=>$user));
         $result = $user->getConnects();
         $listOfResult = array();
 
