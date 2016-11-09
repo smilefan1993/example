@@ -17,7 +17,6 @@ class AdminController extends Controller
      */
     public function adminController()
     {
-        
         $repository = $this->getDoctrine()->getRepository('AppBundle:User');
         $ListOfUsers = $repository->findAll();
         return $this->render('adminpage/admin.html.twig',[

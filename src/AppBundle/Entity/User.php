@@ -50,10 +50,28 @@ class User extends BaseUser
         return $this;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function removeConnect(User $user)
+    {
+        if($this->myFriends->contains($user))
+        {
+            $this->friendsWithMe->removeElement($this);
+            $this->myFriends->removeElement($user);
+            return $this;
+        }
+    }
+
+    /**
+     * @param User $connectUser
+     */
     public function addFriend(User $connectUser)
     {
         $this->friendsWithMe[]=$connectUser;
     }
+
     /**
      * Return user Id
      *
@@ -64,6 +82,9 @@ class User extends BaseUser
         return $this->id;
     }
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         parent::__construct();

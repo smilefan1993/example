@@ -1,0 +1,89 @@
+<?php
+
+namespace AppBundle\UserHelper;
+
+use AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManager;
+
+class UserHelper
+{
+    private $repository;
+    private $entityManager;
+
+    /**
+     * UserHelper constructor.
+     * @param EntityManager $entityManager
+     */
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->repository = $entityManager->getRepository('AppBundle:User');
+    }
+
+    /** Finding all users
+     * @return array
+     */
+    public function findUsers()
+    {
+        $result = $this->repository->findAll();
+        return $result;
+    }
+
+    /** Create connection between users
+     * @param $user1
+     * @param $user2
+     */
+    public function createConnection($user1,$user2)
+    {
+        $user1 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user1);
+        $user2 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user2);
+        $user1->addConnect($user2);
+        $this->entityManager->flush();
+    }
+
+    /** Delete connections
+     * @param $user1
+     * @param $user2
+     */
+    public function deleteUserConnection($user1,$user2)
+    {
+        $user1 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user1);
+        $user2 = $this->entityManager->getRepository('AppBundle:User')->findOneById($user2);
+        $user1->removeConnect($user2);
+        $user2->removeConnect($user1);
+        $this->entityManager->flush();
+
+    }
+
+    /** Find all connect of user
+     * @param $connectedUser
+     * @return array
+     */
+    public function connectedUsers($connectedUser)
+    {
+        $FriendsOfUser = $this->entityManager->createQuery('
+            SELECT u.id FROM AppBundle:User u
+                      JOIN u.friendsWithMe a WHERE a.id=:myid
+                ')->setParameter('myid',$connectedUser);
+        $ListOfUserFriends = $FriendsOfUser->getResult();
+        $userFriend = $this->entityManager->createQuery('
+            SELECT u.id FROM AppBundle:User u
+                      JOIN u.myFriends mf WHERE mf.id=:myid
+                ')->setParameter('myid',$connectedUser);
+        $ListOfFriends = $userFriend->getResult();
+        $ListOfUsers=array();
+
+        foreach($ListOfUserFriends as $user)
+        {
+            $ListOfUsers[] = $user['id'];
+        }
+
+        foreach($ListOfFriends as $friend)
+        {
+            $ListOfUsers[] = $friend['id'];
+        }
+
+        return $ListOfUsers;
+    }
+}

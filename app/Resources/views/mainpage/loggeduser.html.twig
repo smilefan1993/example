@@ -1,15 +1,20 @@
-<h1>UserCount:</h1> {{ template }}
+<h1>Connection count for {{ app.user.username }}: {{ ConCount }}</h1>
     <table style="border:5px">
         <tr>
             <th>UserName</th>
             <th>Connect/Disconnect</th>
         </tr>
+        {% for user in users %}
         <tr>
+            {% if  user  != app.user.username   %}
             <td>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+                {{ user }}
             </td>
+            <td>
+               <a href="/pressing/{{ user.id }}"><button>{% if user.id in ConResult %}Disconect {% else %} Connect {% endif %}</button></a>
+            </td>
+            {% endif %}
+            {% endfor %}
         </tr>
     </table>
 <a href="/logout">Logout</a>
