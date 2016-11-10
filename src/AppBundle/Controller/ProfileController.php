@@ -5,8 +5,6 @@ namespace AppBundle\Controller;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -43,11 +41,12 @@ class ProfileController extends BaseController
     {
         $user = $this->getUser();
         $userServices = $this->get('user.helper');
-        $connectionResult = $userServices->getConnectedUsers($user);
 
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
+
+        $connectionResult = $userServices->getConnectedUsers($user);
 
         if(!in_array($checkingUser->getId(),$connectionResult))
             throw $this->createNotFoundException('Connection with selected user are doesnt exist!');
