@@ -15,7 +15,7 @@ class DefaultController extends Controller
 
     /**
      * Action for buttons, adding or delete Connection from DataBase
-     * @Route("/pressing/{id}", name="buttonActions" )
+     * @Route("/pressing/{id}", name="pressing" )
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
