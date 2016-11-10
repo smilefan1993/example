@@ -8,13 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\User;
-
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends Controller
 {
 
-    /** Action for buttons, adding or delete Connection from DataBase
+    /**
+     * Action for buttons, adding or delete Connection from DataBase
      * @Route("/pressing/{id}", name="buttonActions" )
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function buttonAction(User $user)
     {
@@ -27,11 +30,12 @@ class DefaultController extends Controller
 
             if (in_array($user->getId(), $connectionResult))
                 $userServices->deleteUserConnection($currentUser,$user);
-            else
+            else{
                 $userServices->createConnection($currentUser,$user);
+                return $this->redirect($this->generateUrl('profile', array('checkingUser'=>$user->getId()),UrlGeneratorInterface::ABSOLUTE_URL));
+            }
 
         }
-
         return $this->redirectToRoute('homepage');
     }
 
@@ -60,14 +64,14 @@ class DefaultController extends Controller
 
             $paginator = $paginator->paginate($listOfUsers,$paginatorPage,6);
             return $this->render('mainpage/mainpage.html.twig',array(
-                'pagination'=>$paginator,
-                'ConCount'=>$userCount,
-                'ConResult'=>$connectionResult,
+                'pagination' => $paginator,
+                'ConCount' => $userCount,
+                'ConResult' => $connectionResult,
             ));
         }
 
         return $this->render('mainpage/mainpage.html.twig',array(
-            'ConCount'=>$userCount,
+            'ConCount' => $userCount,
         ));
     }
 

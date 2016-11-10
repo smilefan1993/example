@@ -66,4 +66,14 @@ class UserHelper
 
         return $listOfResult;
     }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    public function getOnlyConnectedUsers($user)
+    {
+        $result = $user->getConnects();
+        return $result;
+    }
 }
