@@ -52,9 +52,6 @@ class DefaultController extends Controller
         if ($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
             $currentUser = $this->getUser();
             $userServices = $this->get('user.helper');
-            $listOfUsers = $userServices->findUsers();
-            //$connectionResult = $userServices->getConnectedUsers($currentUser);
-            //$userCount = count($connectionResult);
             $connectionResult = $userServices->getOnlyConnectedUsers($currentUser);
             $userCount = count($connectionResult);
             $paginator = $this->get('knp_paginator');
