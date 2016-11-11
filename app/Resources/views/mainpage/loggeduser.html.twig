@@ -11,7 +11,7 @@
                 {{ article }}
             </td>
             <td>
-               <a href="{{ path('pressing', {'id' : article.id}) }}"><button>{% if article.id in ConResult %}Disconect {% else %} Connect {% endif %}</button></a>
+               <a href="{{ path('pressing', {'id' : article.id}) }}"><button>{% if article in ConResult %}Disconect {% else %} Connect {% endif %}</button></a>
             </td>
             {% endif %}
             {% endfor %}

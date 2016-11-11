@@ -47,9 +47,9 @@ class ProfileController extends BaseController
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $connectionResult = $userServices->getConnectedUsers($user);
+        $connectionResult = $userServices->getOnlyConnectedUsers($user);
 
-        if(!in_array($checkingUser->getId(),$connectionResult))
+        if(!in_array($checkingUser,$connectionResult))
             throw $this->createNotFoundException('Connection with selected user are doesnt exist!');
 
         return $this->render('FOSUserBundle:Profile:other_user.html.twig', array(

@@ -52,22 +52,7 @@ class UserHelper
         $this->entityManager->flush();
     }
 
-    /** Find all connect of user
-     * @param $user
-     * @return array
-     */
-    public function getConnectedUsers($user)
-    {
-        $result = $user->getConnects();
-        $listOfResult = array();
-
-        foreach($result as $res)
-            $listOfResult[] = $res->getId();
-
-        return $listOfResult;
-    }
-
-    /**
+    /**Find all user
      * @param $user
      * @return mixed
      */

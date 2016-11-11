@@ -26,9 +26,9 @@ class DefaultController extends Controller
         if($userValidation->isGranted('IS_AUTHENTICATED_REMEMBERED')){
             $currentUser = $this->getUser();
             $userServices = $this->get('user.helper');
-            $connectionResult = $userServices->getConnectedUsers($currentUser);
+            $connectionResult = $userServices->getOnlyConnectedUsers($currentUser);
 
-            if (in_array($user->getId(), $connectionResult))
+            if (in_array($user, $connectionResult))
                 $userServices->deleteUserConnection($currentUser,$user);
             else{
                 $userServices->createConnection($currentUser,$user);
@@ -53,7 +53,9 @@ class DefaultController extends Controller
             $currentUser = $this->getUser();
             $userServices = $this->get('user.helper');
             $listOfUsers = $userServices->findUsers();
-            $connectionResult = $userServices->getConnectedUsers($currentUser);
+            //$connectionResult = $userServices->getConnectedUsers($currentUser);
+            //$userCount = count($connectionResult);
+            $connectionResult = $userServices->getOnlyConnectedUsers($currentUser);
             $userCount = count($connectionResult);
             $paginator = $this->get('knp_paginator');
 
