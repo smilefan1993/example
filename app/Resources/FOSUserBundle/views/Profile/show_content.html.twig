@@ -1,0 +1,10 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="fos_user_user_show">
+    {% for users in connectedUsers %}
+        <a href="{{ path('profile', {'checkingUser' : users.id}) }}"><p>{{ users.username }}</p></a>
+    {% endfor %}
+    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    <a href="/">back on main page</a>
+</div>

@@ -52,18 +52,13 @@ class UserHelper
         $this->entityManager->flush();
     }
 
-    /** Find all connect of user
+    /**Find all user
      * @param $user
-     * @return array
+     * @return mixed
      */
-    public function getConnectedUsers($user)
+    public function getOnlyConnectedUsers($user)
     {
         $result = $user->getConnects();
-        $listOfResult = array();
-
-        foreach($result as $res)
-            $listOfResult[] = $res->getId();
-
-        return $listOfResult;
+        return $result;
     }
 }

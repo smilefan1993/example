@@ -4,17 +4,21 @@
             <th>UserName</th>
             <th>Connect/Disconnect</th>
         </tr>
-        {% for user in users %}
+        {% for article in pagination %}
         <tr>
-            {% if  user  != app.user.username   %}
+            {% if  article  != app.user.username   %}
             <td>
-                {{ user }}
+                {{ article }}
             </td>
             <td>
-               <a href="/pressing/{{ user.id }}"><button>{% if user.id in ConResult %}Disconect {% else %} Connect {% endif %}</button></a>
+               <a href="{{ path('pressing', {'id' : article.id}) }}"><button>{% if article in ConResult %}Disconect {% else %} Connect {% endif %}</button></a>
             </td>
             {% endif %}
             {% endfor %}
         </tr>
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+<a href="/profile">Profile page</a>
 <a href="/logout">Logout</a>
